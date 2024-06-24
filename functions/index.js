@@ -1,10 +1,13 @@
+const express = require("express");
 const { onRequest } = require("firebase-functions/v2/https");
+
+const app = express();
 var QRCode = require("qrcode");
 
 /**
  * Function to convert text to base64 encoded data URL that represents a QR Code
  */
-exports.toDataURL = onRequest((request, response) => {
+app.get("/toDataURL", (request, response) => {
 	const inputAsText = request.query.inputAsText;
 
 	if (!inputAsText) {
@@ -22,7 +25,7 @@ exports.toDataURL = onRequest((request, response) => {
 	});
 });
 
-exports.toImage = onRequest((request, response) => {
+app.get("/toImage", (request, response) => {
 	const inputAsText = request.query.inputAsText;
 
 	if (!inputAsText) {
@@ -40,3 +43,5 @@ exports.toImage = onRequest((request, response) => {
 		}
 	});
 });
+
+exports.api = onRequest(app);
