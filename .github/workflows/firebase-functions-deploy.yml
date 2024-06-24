@@ -1,0 +1,15 @@
+name: Deploy Firebase Functions
+on:
+    push:
+        branches:
+            - master
+jobs:
+    main:
+        name: Deploy to Firebase
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: dheshalj/deploy-firebase-functions@v0.0.2
+              env:
+                  FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_QRCODE_REST_API }}
+                  FIREBASE_PROJECT: qrcode-rest-api
