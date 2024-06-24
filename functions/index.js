@@ -21,3 +21,20 @@ exports.toDataURL = onRequest((request, response) => {
 		});
 	});
 });
+
+exports.toImage = onRequest((request, response) => {
+	const inputAsText = request.query.inputAsText;
+
+	if (!inputAsText) {
+		return response.status(400).send({
+			dataUrl: null,
+			error: "Please send input text as a query argument to `inputAsText`",
+		});
+	}
+
+	QRCode.toFileStream(response, inputAsText, { type: "png" }, function (error) {
+		if (error) {
+			res.status(500).send({ error: "Error generating QR code. Error" + error });
+		}
+	});
+});
