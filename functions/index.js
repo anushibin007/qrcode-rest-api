@@ -32,6 +32,8 @@ exports.toImage = onRequest((request, response) => {
 		});
 	}
 
+	response.setHeader("Content-Type", "image/png");
+
 	QRCode.toFileStream(response, inputAsText, { type: "png" }, function (error) {
 		if (error) {
 			res.status(500).send({ error: "Error generating QR code. Error" + error });
